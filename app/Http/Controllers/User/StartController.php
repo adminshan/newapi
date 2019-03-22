@@ -72,8 +72,8 @@ class StartController extends Controller
             echo 'Login failed';
         }else {
             $token = substr(md5(time().mt_rand(1,99999)),10,10);
-            setcookie('uid',$info->uid,time()+86400,'/','shopshan.com',false,true);
-            setcookie('token',$token,time()+86400,'/','shopshan.com',false,true);
+            setcookie('uid',$info->uid,time()+86400,'/','tactshan.com',false,true);
+            setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
             $redis_token='str:u:token:web:'.$info->uid;
             Redis::set($redis_token,$token);
             Redis::expire($redis_token,86400);
@@ -111,7 +111,6 @@ class StartController extends Controller
                 'redis_token'=>'str:u:token:',
                 'msg'=>'登陆成功'
             ];
-
         }
         return json_encode($response);
     }
