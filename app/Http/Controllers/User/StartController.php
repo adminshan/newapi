@@ -91,7 +91,6 @@ class StartController extends Controller
         $info=UserModel::where($data)->first();
         $pwd2=password_verify($pwd,$info->pwd);
         if(empty($info)){
-            echo '';
             $response=[
                 'error'=>4003,
                 'msg'=>'Login failed1'
