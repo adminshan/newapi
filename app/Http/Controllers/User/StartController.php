@@ -96,13 +96,11 @@ class StartController extends Controller
                 'error'=>4003,
                 'msg'=>'Login failed1'
             ];
-            return json_encode($response);
         }else if($pwd2===false){
             $response=[
                 'error'=>4004,
                 'msg'=>'Login failed'
             ];
-            return json_encode($response);
         }else {
             $token = substr(md5(time().mt_rand(1,99999)),10,10);
             $redis_token='str:u:token:'.$info->uid;
@@ -111,9 +109,11 @@ class StartController extends Controller
             $response=[
                 'token'=>$token,
                 'uid'=>$info->uid,
-                'redis_token'=>'str:u:token:'
+                'redis_token'=>'str:u:token:',
+                'msg'=>'登陆成功'
             ];
-            return json_encode($response);
+
         }
+        return json_encode($response);
     }
 }
