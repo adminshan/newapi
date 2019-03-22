@@ -82,16 +82,16 @@ class StartController extends Controller
 			header("refresh:0.2;$rqurl");
         }
     }
-    public function apiLogin(){
-        $name =$_POST['name'];
-        $pwd=$_POST['pwd'];
+    public function apiLogin(Request $request){
+        $name=$request->input('name');
+        $pwd=$request->input('pwd');
         $data=[
             'name'=>$name
         ];
         $info=UserModel::where($data)->first();
         $pwd2=password_verify($pwd,$info->pwd);
         if(empty($info)){
-            echo 'Login failed';
+            echo 'Login failed1';
         }else if($pwd2===false){
             echo 'Login failed';
         }else {
