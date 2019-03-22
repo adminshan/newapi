@@ -104,7 +104,7 @@ class StartController extends Controller
             $response=[
                 'token'=>$token
             ];
-            return $response;
+            return json_encode($response);
         }
     }
 }
