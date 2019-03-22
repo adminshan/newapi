@@ -109,7 +109,6 @@ class StartController extends Controller
             Redis::set($redis_token,$token);
             Redis::expire($redis_token,86400);
             $response=[
-                'error'=>0,
                 'token'=>$token,
                 'uid'=>$info->uid,
                 'redis_token'=>'str:u:token:'
