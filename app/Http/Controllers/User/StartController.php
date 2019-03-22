@@ -91,9 +91,18 @@ class StartController extends Controller
         $info=UserModel::where($data)->first();
         $pwd2=password_verify($pwd,$info->pwd);
         if(empty($info)){
-            echo 'Login failed1';
+            echo '';
+            $response=[
+                'error'=>4003,
+                'msg'=>'Login failed1'
+            ];
+            return json_encode($response);
         }else if($pwd2===false){
-            echo 'Login failed';
+            $response=[
+                'error'=>4004,
+                'msg'=>'Login failed'
+            ];
+            return json_encode($response);
         }else {
             $token = substr(md5(time().mt_rand(1,99999)),10,10);
             $redis_token='str:u:token:'.$info->uid;
