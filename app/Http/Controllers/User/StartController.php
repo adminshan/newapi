@@ -113,6 +113,7 @@ class StartController extends Controller
                 'msg'=>'登陆成功'
             ];
         }
-        echo json_encode($response);
+        var_dump($response);
+       // echo json_encode($response);
     }
 }
