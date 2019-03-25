@@ -105,10 +105,11 @@ class StartController extends Controller
             Redis::set($redis_token,$token);
             Redis::expire($redis_token,86400);
             $response=[
-                'error'=>0,
+                'error'=>1,
                 'token'=>$token,
                 'uid'=>$info->uid,
                 'name'=>$info->name,
+                'email'=>$info->email,
                 'age'=>$info->age,
                 'redis_token'=>'str:u:token:web',
                 'msg'=>'登陆成功'
