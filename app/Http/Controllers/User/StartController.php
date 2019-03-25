@@ -101,13 +101,9 @@ class StartController extends Controller
         }else {
             $token = substr(md5(time().mt_rand(1,99999)),10,10);
             $redis_token='str:u:token:web'.$info->uid;
-            $res=Redis::hget($redis_token);
-            if(!empty($res)){
-                Redis::del($redis_token);
-            }else{
-                Redis::hset($redis_token,$token);
-                Redis::expire($redis_token,86400);
-            }
+            Redis::del($redis_token);
+            Redis::set($redis_token,$token);
+            Redis::expire($redis_token,86400);
             $response=[
                 'token'=>$token,
                 'uid'=>$info->uid,
