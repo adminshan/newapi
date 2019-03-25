@@ -92,25 +92,28 @@ class StartController extends Controller
         $pwd2=password_verify($pwd,$info->pwd);
         if(empty($info)){
             $response=[
-                'error'=>4003,
-                'msg'=>'Login failed1'
+                'msg'=>'登录失败'
             ];
         }else if($pwd2===false){
             $response=[
-                'error'=>4004,
-                'msg'=>'Login failed'
+                'msg'=>'登录失败'
             ];
         }else {
             $token = substr(md5(time().mt_rand(1,99999)),10,10);
-            setcookie('uid',$info->uid,time()+86400,'/','tactshan.com',false,true);
-            setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
-            $redis_token='str:u:token:'.$info->uid;
-            Redis::set($redis_token,$token);
-            Redis::expire($redis_token,86400);
+            $redis_token='str:u:token:web'.$info->uid;
+            $res=Redis::hget($redis_token);
+            if(!empty($res)){
+                Redis::del($redis_token);
+            }else{
+                Redis::hset($redis_token,$token);
+                Redis::expire($redis_token,86400);
+            }
             $response=[
                 'token'=>$token,
                 'uid'=>$info->uid,
-                'redis_token'=>'str:u:token:',
+                'name'=>$info->name,
+                'age'=>$info->age,
+                'redis_token'=>'str:u:token:web',
                 'msg'=>'登陆成功'
             ];
         }
