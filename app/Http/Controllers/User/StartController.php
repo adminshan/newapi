@@ -105,6 +105,7 @@ class StartController extends Controller
             Redis::set($redis_token,$token);
             Redis::expire($redis_token,86400);
             $response=[
+                'error'=>0,
                 'token'=>$token,
                 'uid'=>$info->uid,
                 'name'=>$info->name,
@@ -113,7 +114,7 @@ class StartController extends Controller
                 'msg'=>'登陆成功'
             ];
         }
-        var_dump($response);
-       // echo json_encode($response);
+        //var_dump($response);
+        echo json_encode($response);
     }
 }
