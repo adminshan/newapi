@@ -96,7 +96,7 @@ class StartController extends Controller
             ];
         }else if($pwd2===false){
             $response=[
-                'msg'=>'登录失败'
+                'msg'=>'登录失败1'
             ];
         }else {
             $token = substr(md5(time().mt_rand(1,99999)),10,10);
@@ -113,6 +113,6 @@ class StartController extends Controller
                 'msg'=>'登陆成功'
             ];
         }
-        return json_encode($response);
+        echo json_encode($response);
     }
 }
