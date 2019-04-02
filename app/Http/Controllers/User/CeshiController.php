@@ -121,15 +121,18 @@ class CeshiController extends Controller
         $info = UserModel::where($data)->first();
         $pwd2 = password_verify($pwd, $info->pwd);
         if (empty($info)) {
-            echo 'Login failed';
+            $response=[
+                'msg'=>'登录失败'
+            ];
         } else if ($pwd2 === false) {
-            echo 'Login failed';
+            $response=[
+                'msg'=>'登录失败'
+            ];
         } else {
             $token = substr(md5(time() . mt_rand(1, 99999)), 10, 10);
-            setcookie('uid', $info->uid, time() + 86400, '/', 'shopshan.com', false, true);
-            setcookie('token', $token, time() + 86400, '/', 'shopshan.com', false, true);
             $redis_token = 'str:u:token:web:' . $info->uid;
             Redis::set($redis_token, $token);
+
             Redis::expire($redis_token, 86400);
             echo 'Login successful';
             $userWhere=[
@@ -137,7 +140,10 @@ class CeshiController extends Controller
                 'login_time'=>time()
             ];
             UserModel::where($data)->update($userWhere);
-            header("refresh:0.2;http://wang.shopshan.com/user/ceshi");
+            $response=[
+                'msg'=>'登陆成功'
+            ];
         }
+        echo json_encode($response);
     }
 }
