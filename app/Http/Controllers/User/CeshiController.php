@@ -143,9 +143,11 @@ class CeshiController extends Controller
                 'login_time'=>time()
             ];
             UserModel::where($data)->update($userWhere);
+            $data=UserModel::all();
             $response=[
                 'code'=>0,
-                'msg'=>'登陆成功'
+                'msg'=>'登陆成功',
+                'info'=>$data
             ];
         }
         echo json_encode($response);
