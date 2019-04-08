@@ -124,10 +124,12 @@ class CeshiController extends Controller
         $pwd2 = password_verify($pwd, $info->pwd);
         if (empty($info)) {
             $response=[
+                'code'=>4003,
                 'msg'=>'登录失败'
             ];
         } else if ($pwd2 === false) {
             $response=[
+                'code'=>4003,
                 'msg'=>'登录失败'
             ];
         } else {
@@ -136,13 +138,13 @@ class CeshiController extends Controller
             Redis::set($redis_token, $token);
 
             Redis::expire($redis_token, 86400);
-            echo 'Login successful';
             $userWhere=[
                 'status'=>2,
                 'login_time'=>time()
             ];
             UserModel::where($data)->update($userWhere);
             $response=[
+                'code'=>0,
                 'msg'=>'登陆成功'
             ];
         }
