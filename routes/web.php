@@ -35,7 +35,11 @@ Route::post('/ceshi/login','User\CeshiController@doLogin');
 Route::post('/user/reg','User\CeshiController@user_reg');
 Route::post('/user/login','User\CeshiController@user_login');
 
-
+//加密
+Route::get('/enopenssl','Openssl\OpensslController@encode');
+//切片上传
+Route::get('/uploadshow','Img\ImgController@show');
+Route::post('/upload','Img\ImgController@upload');
 
 
 

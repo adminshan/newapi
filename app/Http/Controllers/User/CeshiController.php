@@ -71,15 +71,7 @@ class CeshiController extends Controller
                 'login_time'=>time()
             ];
             UserModel::where($data)->update($userWhere);
-            $user=UserModel::where($data)->first();
-            if(time()-$user->login_time<1000){
-                header("refresh:0.2;http://wang.shopshan.com/user/ceshi");
-            }else{
-                setcookie('uid',$_COOKIE['uid'],time()-1,'/','shopshan.com',false,true);
-                setcookie('token',$_COOKIE['token'],time()-1,'/','shopshan.com',false,true);
-                echo '已下线，请登录';
-                header("refresh:0.2;http://wang.shopshan.com/user/ceshi");
-            }
+            header("refresh:0.2;http://wang.shopshan.com/user/ceshi");
         }
     }
     public function user_reg(Request $request){
@@ -91,10 +83,13 @@ class CeshiController extends Controller
         ];
         $info=UserModel::where($where)->get()->toArray();
         if(!empty($info)){
-            die('User registered');
-
+            $response=[
+                'msg'=>'用户已注册'
+            ];
         }else if($pwd2===false){
-            die('Confirm that the password must match the password');
+            $response=[
+                'msg'=>'注册失败'
+            ];
         }else{
             $data=[
                 'uname' =>$name,
@@ -104,13 +99,16 @@ class CeshiController extends Controller
             ];
             $uid=UserModel::insertGetId($data);
             if($uid){
-                echo 'Registration success';
-                header('refresh:1;/ceshi/login');
+                $response=[
+                    'msg'=>'注册成功'
+                ];
             }else{
-                echo 'Registration failed';
-                header('refresh:0.2;/reg');
+                $response=[
+                    'msg'=>'注册失败'
+                ];
             }
         }
+        echo json_encode($response);
     }
     public function user_login(Request $request){
         $name = $request->input('name');
