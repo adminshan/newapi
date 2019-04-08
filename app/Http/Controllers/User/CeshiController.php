@@ -84,10 +84,12 @@ class CeshiController extends Controller
         $info=UserModel::where($where)->get()->toArray();
         if(!empty($info)){
             $response=[
+                'code'=>4003,
                 'msg'=>'用户已注册'
             ];
         }else if($pwd2===false){
             $response=[
+                'code'=>4003,
                 'msg'=>'注册失败'
             ];
         }else{
@@ -100,10 +102,12 @@ class CeshiController extends Controller
             $uid=UserModel::insertGetId($data);
             if($uid){
                 $response=[
+                    'code'=>1,
                     'msg'=>'注册成功'
                 ];
             }else{
                 $response=[
+                    'code'=>4003,
                     'msg'=>'注册失败'
                 ];
             }
