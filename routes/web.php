@@ -45,13 +45,13 @@ Route::post('/upload','Img\ImgController@upload');
 Route::get('/aaa','Login\LoginController@qqq');
 
 //app登录
-Route::any('user/login','Login\LoginController@login');
+Route::post('user/login','Login\LoginController@login');
 //app退出
-Route::any('/quit','Login\LoginController@quit');
+Route::post('/quit','Login\LoginController@quit');
 //修改密码
-Route::any('/checkpwd','Center\CenterController@changepwd');
+Route::post('/checkpwd','Center\CenterController@changepwd');
 //收藏删除
-Route::any('/delcollect','Center\CenterController@delcollection');
+Route::post('/delcollect','Center\CenterController@delcollection');
 
 
 
