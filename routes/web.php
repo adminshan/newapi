@@ -33,7 +33,7 @@ Route::get('/ceshi/login','User\CeshiController@login');
 Route::post('/ceshi/login','User\CeshiController@doLogin');
 
 Route::post('/user/reg','User\CeshiController@user_reg');
-Route::post('/user/login','User\CeshiController@user_login');
+//Route::post('/user/login','User\CeshiController@user_login');
 
 //加密
 Route::get('/enopenssl','Openssl\OpensslController@encode');
