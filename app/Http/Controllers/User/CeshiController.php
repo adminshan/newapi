@@ -146,7 +146,8 @@ class CeshiController extends Controller
             $response=[
                 'code'=>0,
                 'msg'=>'登陆成功',
-                'info'=>$data
+                'uid'=>$info->uid,
+                'token'=>$token
             ];
         }
         echo json_encode($response);
