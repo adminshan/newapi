@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\UserModel;
 use App\Model\GoodsModel;
+use App\Model\BanbenModel;
 use Illuminate\Support\Facades\Redis;
 
 class CeshiController extends Controller
@@ -161,5 +162,16 @@ class CeshiController extends Controller
         if(!empty($info)){
             echo json_encode($info);
         }
+    }
+    public function banben(Request $request){
+        $banben=$request->input('banben');
+        $info=BanbenModel::max('banben');
+       if($banben<$info){
+           $response=[
+               'code'=>300,
+               'msg'=>'请升级',
+           ];
+       }
+        echo json_encode($response);
     }
 }

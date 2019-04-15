@@ -35,6 +35,7 @@ Route::post('/ceshi/login','User\CeshiController@doLogin');
 Route::post('/user/reg','User\CeshiController@user_reg');
 Route::post('/user/login','User\CeshiController@user_login');
 Route::post('/showlist','User\CeshiController@showlist');
+Route::post('/show/banben','User\CeshiController@banben');
 
 
 
