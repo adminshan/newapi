@@ -33,7 +33,13 @@ Route::get('/ceshi/login','User\CeshiController@login');
 Route::post('/ceshi/login','User\CeshiController@doLogin');
 
 Route::post('/user/reg','User\CeshiController@user_reg');
-//Route::post('/user/login','User\CeshiController@user_login');
+Route::post('/user/login','User\CeshiController@user_login');
+
+
+
+
+
+
 
 //加密
 Route::get('/enopenssl','Openssl\OpensslController@encode');
@@ -45,7 +51,7 @@ Route::post('/upload','Img\ImgController@upload');
 Route::get('/aaa','Login\LoginController@qqq');
 
 //app登录
-Route::post('user/login','Login\LoginController@login');
+//Route::post('user/login','Login\LoginController@login');
 //app退出
 Route::post('/quit','Login\LoginController@quit');
 //修改密码

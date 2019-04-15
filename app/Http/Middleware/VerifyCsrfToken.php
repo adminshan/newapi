@@ -26,6 +26,6 @@ class VerifyCsrfToken extends Middleware
         '/ceshi/login',
         '/user/reg',
         '/upload',
-        'user/login'
+        '/user/login'
     ];
 }
