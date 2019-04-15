@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\UserModel;
+use App\Model\GoodsModel;
 use Illuminate\Support\Facades\Redis;
 
 class CeshiController extends Controller
@@ -151,5 +152,14 @@ class CeshiController extends Controller
             ];
         }
         echo json_encode($response);
+    }
+    public function showlist(){
+        $data=GoodsModel::all()->toArray();
+        $info=[
+            'data'=>$data
+        ];
+        if(!empty($info)){
+            echo json_encode($info);
+        }
     }
 }
