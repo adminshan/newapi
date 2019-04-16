@@ -60,7 +60,7 @@ class ErweiController extends Controller
     public function codeDo(Request $request){
         $result=$request->input('result');
         $user_id=$request->input('user_id');
-
+        echo $result;
         $redis=new \Redis();
         $redis->connect('127.0.0.1',6379);
         $time=60;
