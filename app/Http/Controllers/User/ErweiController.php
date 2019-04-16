@@ -9,18 +9,22 @@ use Illuminate\Support\Facades\Redis;
 class ErweiController extends Controller
 {
     public function generate(){
+        $redis=new \Redis();
+        $redis->connect('127.0.0.1',6379);
         $key="token_app";
-        $useToken = Redis::scard($key);
+        $useToken = $redis->scard($key);
         for($i=0;$i<100-$useToken;$i++){
             $num = rand(100,100000).time();
             $token=md5($num);
             $start=rand(0,10);
             $end=rand(11,32);
             $token=substr($token,$start,$end);
-            Redis::sadd($key,$token);
+            $redis->sadd($key,$token);
         }
     }
     public function qrcode($uid){
+        $redis=new \Redis();
+        $redis->connect('127.0.0.1',6379);
         $key="token_app";
         $code=Redis::spop($key,$uid);
         //echo $code;die;
@@ -30,20 +34,7 @@ class ErweiController extends Controller
         ];
         return view('send.qrcode',$data);
     }
-    public function success(Request $request){
-        $uid=$request->input('uid');
-        $where=[
-            'user_id'=>$uid
-        ];
-        $info=UserModel::where($where)->first();
-        if($info){
-            return 1;
-//            $data=[
-//                'code'=>1
-//            ];
-//            echo json_encode($data);
-        }
-    }
+
     public function successly(){
         echo '登陆成功';
     }
@@ -57,7 +48,7 @@ class ErweiController extends Controller
         $redis->connect('127.0.0.1',6379);
         $key="token_app";
         $arr=$redis->sPop($key);
-        var_dump($arr);die;
+        //var_dump($arr);die;
         return view('send.qrcode',['arr'=>$arr]);
     }
 
