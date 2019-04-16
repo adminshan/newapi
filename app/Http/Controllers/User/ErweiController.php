@@ -57,7 +57,7 @@ class ErweiController extends Controller
         $redis->connect('127.0.0.1',6379);
         $key="token_app";
         $arr=$redis->sPop($key);
-//        var_dump($arr);die;
+        var_dump($arr);die;
         return view('send.qrcode',['arr'=>$arr]);
     }
 
@@ -69,6 +69,7 @@ class ErweiController extends Controller
     public function codeDo(Request $request){
         $result=$request->input('result');
         $user_id=$request->input('user_id');
+
         $redis=new \Redis();
         $redis->connect('127.0.0.1',6379);
         $time=60;
