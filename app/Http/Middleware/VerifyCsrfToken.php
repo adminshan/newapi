@@ -29,6 +29,7 @@ class VerifyCsrfToken extends Middleware
         '/user/login' ,
         '/showlist',
         '/show/banben',
+        '/codeDo',
         '*'
     ];
 }

@@ -65,10 +65,11 @@ class ErweiController extends Controller
         $redis->connect('127.0.0.1',6379);
         $time=60;
         $res=$redis->set($result,$user_id,$time);
+        //var_dump($res);die;
         if($res){
-            return json_encode(['code'=>1,'msg'=>'扫描成功']);
+            echo json_encode(['code'=>1,'msg'=>'扫描成功']);
         }else{
-            return json_encode(['code'=>2,'msg'=>'扫描失败']);
+            echo json_encode(['code'=>2,'msg'=>'扫描失败']);
         }
     }
 
@@ -79,10 +80,12 @@ class ErweiController extends Controller
      */
     public function getCode(Request $request){
         $arr=$request->input();
+        //print_r($arr);die;
         $token=$arr['token'];
         $redis=new \Redis();
         $redis->connect('127.0.0.1',6379);
         $res=$redis->get($token);
+        //var_dump($res);die;
         if($res){
             return 1;
         }

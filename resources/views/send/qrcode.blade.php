@@ -99,7 +99,7 @@
             data    :   {token:token},
             dataType:   'json',
             success :   function(res){
-                if(res.code==1){
+                if(res==1){
                     location.href= '/successly';
                 }
             }
