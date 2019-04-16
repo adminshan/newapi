@@ -75,7 +75,7 @@
 </body>
 </html>
 <script src="js/jquery.min.js"></script>
-<script src="js/qrcode.js"></script>
+<script src="js/qrcode.min.js"></script>
 <script>
     // 设置参数方式
     var qrcode = new QRCode('qrcode', {
