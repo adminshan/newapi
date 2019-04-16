@@ -37,12 +37,6 @@ Route::post('/user/login','User\CeshiController@user_login');
 Route::post('/showlist','User\CeshiController@showlist');
 Route::post('/show/banben','User\CeshiController@banben');
 
-
-
-
-
-
-
 //加密
 Route::get('/enopenssl','Openssl\OpensslController@encode');
 //切片上传
@@ -61,13 +55,11 @@ Route::post('/checkpwd','Center\CenterController@changepwd');
 //收藏删除
 Route::post('/delcollect','Center\CenterController@delcollection');
 
-
-
-
-
-
-
-
+//二维码
+Route::get('/generate','User\ErweiController@generate');
+Route::get('/code','User\ErweiController@code');
+Route::post('/getCode','User\ErweiController@getCode');
+Route::get('/successly','User\ErweiController@successly');
 
 
 
