@@ -59,6 +59,7 @@ Route::post('/delcollect','Center\CenterController@delcollection');
 Route::get('/generate','User\ErweiController@generate');
 Route::get('/code','User\ErweiController@code');
 Route::post('/getCode','User\ErweiController@getCode');
+Route::post('/codeDo','User\ErweiController@codeDo');
 Route::get('/successly','User\ErweiController@successly');
 
 
