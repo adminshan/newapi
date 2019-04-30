@@ -9,11 +9,29 @@
         <input type="text" name="name" id="inputNickName" class="form-control" placeholder="nickname" required autofocus>
         <label for="inputPassword" >Password</label>
         <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="***" required>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn-lg btn-primary btn-block" id="btn">Sign in</button>
     </form>
+@endsection
+@section('footer')
+    @parent
+
+    <script >
+//        $('#btn').click(function(){
+//            var name=$('#inputNickName').val()
+//            var pwd=$('#inputPassword').val()
+//            $.ajax({
+//                url:"http://api.shopshan.com/login.php",
+//                data:{name:name,pwd:pwd},
+//                type:"get",
+//                dataType:"jsonp",
+//                jsonp:"callback",
+//                success:function(data){
+//                    alert(data.msg)
+//                    if(data.code==0){
+//                        location.href="/success"
+//                    }
+//                }
+//            })
+//        })
+    </script>
 @endsection

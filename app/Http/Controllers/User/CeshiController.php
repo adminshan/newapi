@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\UserModel;
 use App\Model\GoodsModel;
 use App\Model\BanbenModel;
+
 use Illuminate\Support\Facades\Redis;
 
 class CeshiController extends Controller
@@ -47,6 +48,7 @@ class CeshiController extends Controller
     public function login(){
         return view('users.logins');
     }
+
     public function doLogin(Request $request)
     {
         $name = $request->input('name');
@@ -55,6 +57,9 @@ class CeshiController extends Controller
             'uname' => $name
         ];
         $info = UserModel::where($data)->first();
+        if($info->status==2){
+            echo "用户已在其他平台登录";die;
+        }
         $pwd2 = password_verify($pwd, $info->pwd);
         if (empty($info)) {
             echo 'Login failed';
@@ -62,8 +67,8 @@ class CeshiController extends Controller
             echo 'Login failed';
         } else {
             $token = substr(md5(time() . mt_rand(1, 99999)), 10, 10);
-            setcookie('uid', $info->uid, time() + 86400, '/', 'shopshan.com', false, true);
-            setcookie('token', $token, time() + 86400, '/', 'shopshan.com', false, true);
+            setcookie('uid', $info->uid, time() + 86400, '/', '', false, true);
+            setcookie('token', $token, time() + 86400, '/', '', false, true);
             $redis_token = 'str:u:token:web:' . $info->uid;
             Redis::set($redis_token, $token);
             Redis::expire($redis_token, 86400);
@@ -73,9 +78,24 @@ class CeshiController extends Controller
                 'login_time'=>time()
             ];
             UserModel::where($data)->update($userWhere);
-            header("refresh:0.2;http://wang.shopshan.com/user/ceshi");
+            header("refresh:0.2;/goodslist");
         }
     }
+    public function showgoods(){
+        //$info=GoodsModel::all()->toArray();
+        $info=[
+            'goods_id'=>1,
+            'goods_name'=>"玩具",
+            'goods_price'=>1200
+        ];
+        $data=$this->encode($info);
+        var_dump($data);
+        $datalist=[
+            'list'=>$data
+        ];
+        return view('users.list',$datalist);
+    }
+
     public function user_reg(Request $request){
         $name=$request->input('name');
         $pwd=password_hash($request->input('pwd'),PASSWORD_BCRYPT);
@@ -89,11 +109,13 @@ class CeshiController extends Controller
                 'code'=>4003,
                 'msg'=>'用户已注册'
             ];
+            echo json_encode($response);
         }else if($pwd2===false){
             $response=[
                 'code'=>4003,
                 'msg'=>'注册失败'
             ];
+            echo json_encode($response);
         }else{
             $data=[
                 'uname' =>$name,
@@ -107,14 +129,16 @@ class CeshiController extends Controller
                     'code'=>1,
                     'msg'=>'注册成功'
                 ];
+                echo json_encode($response);
             }else{
                 $response=[
                     'code'=>4003,
                     'msg'=>'注册失败'
                 ];
+                echo json_encode($response);
             }
         }
-        echo json_encode($response);
+
     }
     public function user_login(Request $request){
         $name = $request->input('name');
@@ -123,17 +147,26 @@ class CeshiController extends Controller
             'uname' => $name
         ];
         $info = UserModel::where($data)->first();
+        if($info->status==2){
+            $response=[
+                'code'=>4013,
+                'msg'=>'用户已在其他平台登录'
+            ];
+            echo json_encode($response);die;
+        }
         $pwd2 = password_verify($pwd, $info->pwd);
         if (empty($info)) {
             $response=[
                 'code'=>4003,
                 'msg'=>'登录失败'
             ];
+            echo json_encode($response);
         } else if ($pwd2 === false) {
             $response=[
                 'code'=>4003,
                 'msg'=>'登录失败'
             ];
+            echo json_encode($response);
         } else {
             $token = substr(md5(time() . mt_rand(1, 99999)), 10, 10);
             $redis_token = 'str:u:token:web:' . $info->uid;
@@ -151,8 +184,9 @@ class CeshiController extends Controller
                 'uid'=>$info->uid,
                 'token'=>$token
             ];
+            echo json_encode($response);
         }
-        echo json_encode($response);
+
     }
     public function showlist(){
         $data=GoodsModel::all()->toArray();
@@ -162,6 +196,32 @@ class CeshiController extends Controller
         if(!empty($info)){
             echo json_encode($info);
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function success(){
+        echo  "欢迎登录";
     }
     public function banben(Request $request){
         $banben=$request->input('banben');

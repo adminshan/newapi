@@ -91,5 +91,7 @@ class ErweiController extends Controller
         }
     }
 
-
+    public function server(){
+        print_r($_SERVER);
+    }
 }

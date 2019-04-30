@@ -6,34 +6,33 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
+use App\Model\OpensslModel;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function checkToken($token,$uid){
-        $key='redis_token_str:'.$uid;
-        $redis_token=Redis::hget($key,'utoken');
-        if(empty($uid)){
-            $data=[
-                'code'=>40001,
-                'msg'=>'你还没有登录，请先登录'
-            ];
-            return json_encode($data);
-        }
-        if(empty($token)){
-            $data=[
-                'code'=>40001,
-                'msg'=>'你还没有登录，请先登录'
-            ];
-            return json_encode($data);
-        }elseif ($token!=$redis_token){
-            $data=[
-                'code'=>40010,
-                'msg'=>'非法登录'
-            ];
-            return  json_encode($data);
-        }
-        return true;
+    //加密
+    public function encode($data){
+        $json_str = json_encode($data);
+        //echo $json_str;die;
+        $post_str = base64_encode($json_str);
+        //var_dump($post_str);die;
+        $info=OpensslModel::first();
+        $priv=$info->priv;
+        $pub=$info->pub;
+        $encryptData="";
+        openssl_private_encrypt($post_str,$encryptData,$priv);
+        $destr = base64_encode($encryptData);
+        //echo $destr;echo '<br>';die;
+        $this->decode($destr,$pub);
+    }
+    //解密
+    public function decode($destr,$pub){
+        $str=base64_decode($destr);
+        $decrypData="";
+        openssl_public_decrypt($str,$decrypData,$pub);
+        $info=base64_decode($decrypData);
+        $data=json_decode($info);
+        var_dump($data);
     }
 }
