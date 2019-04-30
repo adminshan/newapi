@@ -7,13 +7,13 @@
             <td>商品名称</td>
             <td>商品价格</td>
         </tr>
-
+        @foreach($list as $v)
             <tr>
-                <td>{{$goods_id}}</td>
-                <td>{{$goods_name}}</td>
-                <td>{{$goods_price}}</td>
+                <td>{{$v['goods_id']}}</td>
+                <td>{{$v['goods_name']}}</td>
+                <td>{{$v['goods_price']}}</td>
             </tr>
 
-
+        @endforeach
     </table>
 @endsection

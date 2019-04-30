@@ -82,16 +82,15 @@ class CeshiController extends Controller
         }
     }
     public function showgoods(){
-        //$info=GoodsModel::all()->toArray();
-        $info=[
-            'goods_id'=>1,
-            'goods_name'=>"玩具",
-            'goods_price'=>1200
-        ];
+        $info=GoodsModel::all()->toArray();
+        $key='str:goods';
+        $datainfo=json_encode($info);
+        Redis::set($key,$datainfo);
+        //$Info= Redis::get($key);
+        //print_r($Info);die;
         $data=$this->encode($info);
-        var_dump($data);
         $datalist=[
-            'list'=>$data
+            'list'=>$info
         ];
         return view('users.list',$datalist);
     }

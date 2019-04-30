@@ -33,6 +33,6 @@ class Controller extends BaseController
         openssl_public_decrypt($str,$decrypData,$pub);
         $info=base64_decode($decrypData);
         $data=json_decode($info);
-        var_dump($data);
+        return $data;
     }
 }
